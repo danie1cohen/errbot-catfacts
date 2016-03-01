@@ -31,6 +31,10 @@ class Catfacts(BotPlugin):
         except Exception:
             pass
 
+    @botcmd(admin_only=True)
+    def trigger_random(self, mess, args):
+        self.random_fact()
+
     def random_fact(self):
         facts = self.get_catfacts(1)
         self.send(self.config['FACT_CHANNEL'], facts[0], message_type='groupchat')
