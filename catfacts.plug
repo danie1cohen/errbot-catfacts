@@ -1,0 +1,9 @@
+[Core]
+Name = Catfacts
+Module = catfacts
+
+[Documentation]
+Description = Plugin for retrieving catfacts
+
+[Python]
+Version = 3
