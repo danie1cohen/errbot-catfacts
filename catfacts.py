@@ -32,7 +32,7 @@ class Catfacts(BotPlugin):
             pass
 
     @botcmd(admin_only=True)
-    def trigger_random(self, mess, args):
+    def catfact_trigger(self, mess, args):
         self.random_fact()
 
     def random_fact(self):
