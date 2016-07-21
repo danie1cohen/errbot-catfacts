@@ -33,11 +33,13 @@ class Catfacts(BotPlugin):
 
     @botcmd(admin_only=True)
     def catfact_trigger(self, mess, args):
-        self.random_fact()
+        """Triggers a catfact in the configured channel"""
+        if 'FACT_CHANNEL' in self.config and self.build_identifier(self.config['FACT_CHANNEL']):
+            self.random_fact()
 
     def random_fact(self):
         facts = self.get_catfacts(1)
-        self.send(self.config['FACT_CHANNEL'], facts[0], message_type='groupchat')
+        self.send(self.build_identifier(self.config['FACT_CHANNEL']), facts[0])
 
     def activate(self):
         """Activates plugin, activating the random facts if the period is positive seconds"""
