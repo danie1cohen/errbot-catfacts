@@ -16,9 +16,9 @@ class Catfacts(BotPlugin):
     min_err_version = '3.0.0' # Optional, but recommended
 
     def get_catfacts(self, number):
-        payload = {'number': number}
-        r = requests.get("http://catfacts-api.appspot.com/api/facts", params=payload)
-        return r.json()['facts']
+        payload = {'limit': number}
+        r = requests.get("https://catfact.ninja/facts", params=payload)
+        return [d['fact'] for d in r.json()['data']]
 
     @botcmd
     def catfact(self, mess, args):
