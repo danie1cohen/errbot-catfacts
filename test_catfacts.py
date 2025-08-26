@@ -24,6 +24,7 @@ def test_get_single_catfact(mock_get):
 
     # Mock the API response
     mock_response = MagicMock()
+    mock_response.status_code = 200
     mock_response.json.return_value = {
         'fact': 'Cats sleep 12-16 hours per day.',
         'length': 30
@@ -47,6 +48,7 @@ def test_get_multiple_catfacts(mock_get):
 
     # Mock the API responses for multiple calls
     mock_response = MagicMock()
+    mock_response.status_code = 200
     mock_response.json.side_effect = [
         {'fact': 'First cat fact', 'length': 15},
         {'fact': 'Second cat fact', 'length': 16},
@@ -78,6 +80,7 @@ def test_catfact_command_single(mock_get):
 
     # Mock the API response
     mock_response = MagicMock()
+    mock_response.status_code = 200
     mock_response.json.return_value = {
         'fact': 'Cats have excellent night vision.',
         'length': 33
@@ -105,6 +108,7 @@ def test_catfact_command_multiple(mock_get):
 
     # Mock the API responses
     mock_response = MagicMock()
+    mock_response.status_code = 200
     mock_response.json.side_effect = [
         {'fact': 'Fact one', 'length': 8},
         {'fact': 'Fact two', 'length': 8}
@@ -131,6 +135,7 @@ def test_catfact_command_max_limit(mock_get):
     plugin.config = {'MAX_FACTS': 3}
 
     mock_response = MagicMock()
+    mock_response.status_code = 200
     mock_response.json.side_effect = [
         {'fact': 'Fact one', 'length': 8},
         {'fact': 'Fact two', 'length': 8},

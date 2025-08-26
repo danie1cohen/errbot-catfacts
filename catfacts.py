@@ -20,7 +20,14 @@ class Catfacts(BotPlugin):
         facts = []
         for _ in range(number):
             r = requests.get("https://catfact.ninja/fact")
-            facts.append(r.json()['fact'])
+            if r.status_code == 200:
+                data = r.json()
+                if 'fact' in data:
+                    facts.append(data['fact'])
+            # Small delay to avoid rate limiting when getting multiple facts
+            if len(facts) < number:
+                import time
+                time.sleep(0.1)
         return facts
 
     @botcmd
