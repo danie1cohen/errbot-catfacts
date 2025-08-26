@@ -1,30 +1,33 @@
 # Plugin for getting catfacts, randomly or on command
 
-from errbot import BotPlugin, botcmd, webhook
+from errbot import BotPlugin, botcmd
 
 import requests
 
 from itertools import chain
 
 CONFIG_TEMPLATE = {'MAX_FACTS': 5,
-                'FACT_PERIOD_S': 86400,
-                'FACT_CHANNEL': '#random'
-                }
+                   'FACT_PERIOD_S': 86400,
+                   'FACT_CHANNEL': '#random'
+                   }
+
 
 class Catfacts(BotPlugin):
     """Plugin for all your cat fact needs!"""
-    min_err_version = '3.0.0' # Optional, but recommended
+    min_err_version = '3.0.0'  # Optional, but recommended
 
     def get_catfacts(self, number):
-        payload = {'limit': number}
-        r = requests.get("https://catfact.ninja/facts", params=payload)
-        return [d['fact'] for d in r.json()['data']]
+        facts = []
+        for _ in range(number):
+            r = requests.get("https://catfact.ninja/fact")
+            facts.append(r.json()['fact'])
+        return facts
 
     @botcmd
     def catfact(self, mess, args):
         """A command which returns some number of catfacts"""
         try:
-            number = max(1, min(self.config['MAX_FACTS'], int(args))) if args else None
+            number = max(1, min(self.config['MAX_FACTS'], int(args))) if args else 1
             facts = self.get_catfacts(number)
             for ii in facts:
                 yield ii
