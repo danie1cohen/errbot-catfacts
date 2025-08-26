@@ -89,6 +89,11 @@ class Catfacts(BotPlugin):
             logger.error("random_fact: No facts returned from get_catfacts(1)")
             self.send(self.build_identifier(channel), "🐱 Cat fact service is temporarily unavailable!")
 
+    def _poller_callback(self):
+        """Wrapper method for poller to avoid method caching issues"""
+        logger.info("_poller_callback called by poller")
+        self.random_fact()
+
     def activate(self):
         """Activates plugin, activating the random facts if the period is positive seconds"""
         logger.info("Catfacts plugin activating")
@@ -100,7 +105,7 @@ class Catfacts(BotPlugin):
         
         if period > 0:
             logger.info(f"Starting poller with {period} second interval")
-            self.start_poller(period, lambda: self.random_fact())
+            self.start_poller(period, self._poller_callback)
         else:
             logger.info("Poller disabled (FACT_PERIOD_S <= 0)")
 

@@ -263,7 +263,7 @@ def test_activate_with_poller():
         plugin.activate()
 
         mock_super_activate.assert_called_once()
-        mock_start_poller.assert_called_once_with(3600, plugin.random_fact)
+        mock_start_poller.assert_called_once_with(3600, plugin._poller_callback)
 
 
 def test_activate_without_poller():
